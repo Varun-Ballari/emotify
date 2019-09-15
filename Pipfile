@@ -12,6 +12,7 @@ Jinja2 = ">=2.10.1"
 flask-socketio = "*"
 tensorflow = "*"
 pillow = "*"
+keras = "*"
 
 [dev-packages]
 
