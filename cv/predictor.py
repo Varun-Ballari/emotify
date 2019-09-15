@@ -1,8 +1,8 @@
 import os
 import cv2
 import numpy as np
-# from keras.preprocessing import image
-# from keras.models import model_from_json, load_model
+from keras.preprocessing import image
+from keras.models import model_from_json, load_model
 
 # import facial
 
