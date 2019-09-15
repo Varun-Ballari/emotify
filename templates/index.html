@@ -1,52 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Face detection demo</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.js"></script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Exo:100,200,400,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/siriwave.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/youtube.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sendData.js') }}"></script>
+
+    <title>Emotify</title>
 </head>
-
 <body>
-
-<div class = "container">
-    <div class = "starter-template">
-        <h1>Face detection example</h1>
-        <p class = "lead"> Try uploading an image to see if a face is detected </p>
-        <p> Face detection using <a href="https://docs.opencv.org/2.4/modules/objdetect/doc/cascade_classification.html" target="blank"> Cascade Classification </a> | Powered by Python, Flask, OpenCV </p>
-        <p> Image size limit: 2 MB </p>
-        <p> By Jerome Vonk - May, 2018 </p>
-    </div>
-</div>
-
-<header class="navbar">
-    <form action="/upload" method="post" enctype="multipart/form-data" >
-        <div align="center">
-            <label class="btn btn-default btn-file">
-                Browse <input type="file" name="image" style="display: none;">
-            </label>
-            <input type="submit" value="Upload your image" class="btn btn-primary">
+    <div id = "main">
+        <div id="videoContainer">
+            <img class="video" id="imageElement" src="{{ url_for('video_feed') }}">
+            <video autoplay="true" class="video" id=videoElement></video>
+            <canvas id="canvasElement"></canvas>
         </div>
-    </form>
-</header>
+        <div id="title">
+            <h1>😀😭😡🤮😱😳😛🎵</h1>
+            <h2 id = 'test'>Your Current Emotion</h2>
+            <h3 id = 'description'>Welcome User! The camera's watching you! Change your expression to change the song!</h3>
+            <p>Made by Team Compiling...</p>
+        </div>
+        <div id="player"></div>
+        <div id="siri-container"></div>
+    </div>
 
-<div class="text-center">
-    {% if init %}
-        {% if faceDetected %}
-            <div class="alert alert-success" style="margin-top:18px;">
-                <strong>Yes!</strong> {{ num_faces }} face(s) detected!
-            </div>
-            {% if image_to_show %}
-                <div>
-                    <img src="{{ image_to_show }}">
-                </div>
-            {% endif %}
-        {% else %}
-            <div class="alert alert-danger" style="margin-top:18px;">
-                <strong>Nope!</strong> No face detected
-            </div>
-        {% endif %}
-    {% endif %}
-</div>
+
+    <script>
+        var siriWave = new SiriWave({
+            container: document.getElementById('siri-container'),
+            width: $(document).width(),
+            height: 100,
+            speed: 0.06,
+            color: '#FC0D1B',
+            frequency: 3,
+            autostart: true
+        });
+    </script>
 
 </body>
 </html>
