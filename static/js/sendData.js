@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var socket = io.connect(namespace);
+	var socket = io.connect("/test");
 
 	socket.on('connect', function(msg) {
 		socket.emit('my event', {data: 'I\'m connected!'});

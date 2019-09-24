@@ -1,32 +1,31 @@
+import sys
 import os
 import cv2
 import numpy as np
 from keras.preprocessing import image
 from keras.models import model_from_json, load_model
+from cv.facial_predictor import FacialRecognizer
 
-# import facial
-
-cvSocket = None
-
-dir = os.path.dirname(__file__) + '/models/'
+dir = os.path.dirname(__file__)
+model_dir = dir + '/models/'
 
 
 class Predictor(object):
 	def __init__(self):
 		self.emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
-		self.people = {0:"Raghav", 1:"Varun", 2:"Shivam", 3:"Akhila", 4:"Nihal"}
+		self.people = {0:"User R", 1:"User V", 2:"User S", 3:"User A", 4:"User N"}
 		self.holdingArray = []
 		self.namesArray = []
 		self.currentEmotion = None
 		self.currentName = None
 
-		self.face_cascade = cv2.CascadeClassifier(os.path.join(dir, 'face_features.xml'))
-		self.emotion_model = model_from_json(open(os.path.join(dir, 'facial_expression_model_structure.json'), 'r').read())
-		self.emotion_model.load_weights(os.path.join(dir, 'facial_expression_model_weights.h5'))
+		self.face_cascade = cv2.CascadeClassifier(os.path.join(model_dir, 'face_features.xml'))
+		self.emotion_model = model_from_json(open(os.path.join(model_dir, 'facial_expression_model_structure.json'), 'r').read())
+		self.emotion_model.load_weights(os.path.join(model_dir, 'facial_expression_model_weights.h5'))
 		self.emotion_model._make_predict_function()
 
-		# name_model = load_model('models/name_model3.h5')
-		# face_recognizer = facial.setup()
+		name_model = load_model(os.path.join(model_dir, 'name_model3.h5'))
+		self.face_recognizer = FacialRecognizer().recognizer
 
 	@staticmethod
 	def _most_frequent_element(array):
@@ -63,14 +62,13 @@ class Predictor(object):
 				detected_face = cv2.cvtColor(detected_face, cv2.COLOR_BGR2GRAY) #transform to gray scale
 				detected_face = cv2.resize(detected_face, (48, 48)) #resize to 48x48
 
-				# name_pred = facial.predict(detected_face, face_recognizer)
-				# name = (self.people[name_pred[0]])
-				# if len(nameArray) < 10:
-				# 	nameArray.append(name)
-				# else:
-				# 	del nameArray[0]
-				# 	nameArray.append(name)
-				# name = self.namesArray[1]
+				name_pred = self.face_recognizer.predict(detected_face)
+				name = (self.people[name_pred[0]])
+				if len(self.namesArray) < 10:
+					self.namesArray.append(name)
+				else:
+					del self.namesArray[0]
+					self.namesArray.append(name)
 
 				face_pixels = image.img_to_array(detected_face)
 				face_pixels = np.expand_dims(face_pixels, axis = 0)
@@ -106,10 +104,10 @@ class Predictor(object):
 					self.holdingArray.append(emotion)
 
 				max_emotion, _ = Predictor._most_frequent_element(self.holdingArray)
-				user = Predictor._most_frequent_element(self.namesArray)
+				user, _ = Predictor._most_frequent_element(self.namesArray)
 
 				img_cv = cv2.resize(img, (400, 300))
-
-				return img_cv, max_emotion, "User"
+				print(max_emotion, user)
+				return img_cv, max_emotion, user
 
 		return img, None, "User"

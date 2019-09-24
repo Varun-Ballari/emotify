@@ -1,12 +1,11 @@
 $(document).ready(function(){
-  let namespace = "/test";
   let video = document.querySelector("#videoElement");
   let canvas = document.querySelector("#canvasElement");
   let ctx = canvas.getContext('2d');
 
   var localMediaStream = null;
 
-  var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+  var socket = io.connect("/test");
   function sendSnapshot() {
     if (!localMediaStream) {
       return;
