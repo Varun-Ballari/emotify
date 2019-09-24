@@ -79,8 +79,8 @@ class FacialRecognizer(object):
         # #create our LBPH face recognizer
         # #train our face recognizer of our training faces
         # face_recognizer.train(faces, np.array(labels))
-        # # test_img1 = cv2.imread("test-data/Shivam_6.jpg")
-        # # test_img2 = cv2.imread("test-data/Varun_6.jpg")
+        # # test_img1 = cv2.imread("test-data/S_6.jpg")
+        # # test_img2 = cv2.imread("test-data/V_6.jpg")
         # # predicted_img1 = predict(test_img1)
         # # predicted_img2 = predict(test_img2)
         # # pred = predict(image)

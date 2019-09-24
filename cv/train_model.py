@@ -8,8 +8,8 @@ from keras.layers import Dense, Activation, Flatten
 import keras
 
 model_path = 'models/name_model3.h5'
-#people = ["Raghav", "Varun", "Shivam", "Akhila"]
-people = {"Raghav":0, "Varun":1, "Shivam":2, "Akhila":3}
+#people = ["R", "V", "S", "A"]
+people = {"R":0, "V":1, "S":2, "A":3}
 
 def imread_convert(f):
     return io.imread(f).astype(np.uint8)
