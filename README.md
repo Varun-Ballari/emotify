@@ -2,7 +2,7 @@
 
 Emotify lets you identify people in real time and play songs based on their detected facial expressions!
 
-Disclaimer: this application is not representative of true emotion and should not be used for any purpose other then fun.
+Disclaimer: this application is not representative of true emotion and should not be used for any purpose other than fun.
 
 #### Instructions to add new person in classifier:
 1. Open the ExpressMusic/cv/take_images.py file
